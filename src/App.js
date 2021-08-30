@@ -26,17 +26,13 @@ const Main = styled.main`
 
 const getPokemon = (id) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  return axios.get(url);
+  return axios.get(url).then((res) => res.data);
 };
 
-getPokemon(1).then((res) => {
-  console.log(res.data);
-});
-
 const buildPokemonArr = async () => {
-  const pokemonArr = [];
-  for (let i = 0; i < 150; i += 1) {
-    pokemonArr[i] = await getPokemon(i + 1).then((res) => res.data);
+  let pokemonArr = [];
+  for (let i = 0; i < 18; i += 1) {
+    pokemonArr = [...pokemonArr, await getPokemon(i + 1)];
   }
   pokemonArr.map((pokemon) => {
     pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
@@ -52,7 +48,7 @@ const App = () => {
     buildPokemonArr().then((pokemonArr) => {
       setPokemonArr(pokemonArr);
     });
-  }, [pokemonArr]);
+  }, []);
 
   return (
     <Container>
