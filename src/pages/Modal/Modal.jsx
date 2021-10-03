@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { mediaQueries } from "../../mediaQueries";
-import { TYPECOLOR } from "../../constant/typeColor";
+import { TYPECOLOR } from "../../constant/type";
 
 const Container = styled.div`
   position: fixed;

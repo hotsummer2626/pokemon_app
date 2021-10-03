@@ -6,3 +6,12 @@ export const STATCOLOR = {
   "special-defense": "#78c751",
   speed: "#f85687",
 };
+
+export const STATTEXT = {
+  hp: "HP",
+  attack: "Attack",
+  defense: "Defense",
+  "special-attack": "Sp.Atk",
+  "special-defense": "Sp.Def",
+  speed: "Speed",
+}

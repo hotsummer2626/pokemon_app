@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Modal from "../../pages/Modal";
-import { TYPECOLOR } from "../../constant/typeColor";
-import { STATCOLOR } from "../../constant/statColor";
+import { TYPECOLOR } from "../../constant/type";
+import { STATCOLOR, STATTEXT } from "../../constant/stat";
 import Img from "./Img";
 
 const Container = styled.div`
@@ -15,6 +14,24 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   box-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
+  transition: box-shadow 0.1s ease;
+  cursor: pointer;
+  &::after {
+    content: "";
+    border-radius: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.1s ease;
+  }
+  &:hover {
+    box-shadow: 0 0 0 #d0d0d0, 0 0 0 #f8f8f8;
+    &::after {
+      box-shadow: inset 3px 3px 3px #d0d0d0, inset -3px -3px 3px #f8f8f8;
+    }
+  }
 `;
 
 const Name = styled.h2`
@@ -115,8 +132,12 @@ const PokeCard = ({ pokemon }) => {
           <StatWrapper>
             {pokemon.stats.map(({ base_stat, stat }) => {
               return (
-                <StatBar statName={stat.name} statNumber={base_stat}>
-                  <StatName>{`${stat.name}:`}</StatName>
+                <StatBar
+                  key={stat.name}
+                  statName={stat.name}
+                  statNumber={base_stat}
+                >
+                  <StatName>{`${STATTEXT[stat.name]}:`}</StatName>
                   <StatNumber>{base_stat}</StatNumber>
                 </StatBar>
               );
