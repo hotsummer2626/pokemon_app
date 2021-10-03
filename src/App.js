@@ -29,9 +29,13 @@ const getPokemon = (id) => {
   return axios.get(url).then((res) => res.data);
 };
 
+getPokemon(1).then(res=>{
+  console.log(res)
+})
+
 const buildPokemonArr = async () => {
   let pokemonArr = [];
-  for (let i = 0; i < 18; i += 1) {
+  for (let i = 0; i < 150; i += 1) {
     pokemonArr = [...pokemonArr, await getPokemon(i + 1)];
   }
   pokemonArr.map((pokemon) => {

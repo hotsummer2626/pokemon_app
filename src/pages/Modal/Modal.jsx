@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { mediaQueries } from "../../mediaQueries";
-import { color } from "../../constant/colorTable";
+import { TYPECOLOR } from "../../constant/typeColor";
 
 const Container = styled.div`
   position: fixed;
@@ -32,7 +32,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   position: relative;
-  background-color: ${({ type }) => color[type]};
+  background-color: ${({ type }) => TYPECOLOR[type]};
   padding: 1.5rem;
   border-radius: 0.5rem;
 

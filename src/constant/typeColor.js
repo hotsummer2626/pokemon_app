@@ -1,4 +1,4 @@
-export const color = {
+export const TYPECOLOR = {
   fire: "#f08030",
   grass: "#78c850",
   water: "#6890f0",
