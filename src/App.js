@@ -4,9 +4,10 @@ import axios from "axios";
 import GlobalStyles from "./components/GlobalStyles";
 import PokeCard from "./components/PokeCard";
 import { TYPECOLOR, TYPEICON } from "./constant/type";
+import { mediaQueries } from "./mediaQueries";
 
 const Container = styled.div`
-  width: 1024px;
+  max-width: 1024px;
   height: max-content;
   padding: 2rem;
   margin: 0 auto;
@@ -54,7 +55,11 @@ const IconWrapper = styled.div`
   }
 `;
 const IconImg = styled.img`
+  width: 30px;
   margin-right: 5px;
+  ${mediaQueries('xs')`
+    width: 20px;
+  `}
 `;
 const IconText = styled.span`
   font-weight: 600;
@@ -64,12 +69,19 @@ const Main = styled.main`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
+  ${mediaQueries("xs")`
+    grid-template-columns: 1fr
+  `}
 `;
 
 const getPokemon = (id) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   return axios.get(url).then((res) => res.data);
 };
+
+getPokemon(1).then(res=>{
+  console.log(res)
+})
 
 const buildPokemonArr = async () => {
   let pokemonArr = [];
@@ -122,7 +134,7 @@ const App = () => {
                 getSelectedPokemonList(icon.text);
               }}
             >
-              {icon.alt && <IconImg width="30" alt={icon.alt} src={icon.src} />}
+              {icon.alt && <IconImg alt={icon.alt} src={icon.src} />}
               <IconText>{icon.text}</IconText>
             </IconWrapper>
           );
