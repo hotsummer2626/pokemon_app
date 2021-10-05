@@ -5,6 +5,7 @@ import GlobalStyles from "./components/GlobalStyles";
 import PokeCard from "./components/PokeCard";
 import { TYPECOLOR, TYPEICON } from "./constant/type";
 import { mediaQueries } from "./mediaQueries";
+import Loading from "./components/Loading";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -34,30 +35,15 @@ const IconWrapper = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
-  transition: box-shadow 0.1s ease;
-  position: relative;
-  &::after {
-    content: "";
-    border-radius: 30px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: all 0.1s ease;
-  }
+  transition: all 0.3s ease;
   &:hover {
-    box-shadow: 0 0 0 #d0d0d0, 0 0 0 #f8f8f8;
-    &::after {
-      box-shadow: inset 3px 3px 3px #d0d0d0, inset -3px -3px 3px #f8f8f8;
-    }
+    transform: scale(1.2);
   }
 `;
 const IconImg = styled.img`
   width: 30px;
   margin-right: 5px;
-  ${mediaQueries('xs')`
+  ${mediaQueries("xs")`
     width: 20px;
   `}
 `;
@@ -79,10 +65,6 @@ const getPokemon = (id) => {
   return axios.get(url).then((res) => res.data);
 };
 
-getPokemon(1).then(res=>{
-  console.log(res)
-})
-
 const buildPokemonArr = async () => {
   let pokemonArr = [];
   for (let i = 0; i < 50; i += 1) {
@@ -98,11 +80,13 @@ const buildPokemonArr = async () => {
 const App = () => {
   const [pokemonArr, setPokemonArr] = useState([]);
   const [selectedPokemonList, setSelectedPokemonList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     buildPokemonArr().then((pokemonArr) => {
       setPokemonArr(pokemonArr);
       setSelectedPokemonList(pokemonArr);
+      setLoading(false);
     });
   }, []);
 
@@ -140,13 +124,17 @@ const App = () => {
           );
         })}
       </IconContainer>
-      <Main>
-        {selectedPokemonList.map((pokemon, index) => (
-          <PokeCard key={index} pokemon={pokemon}>
-            {pokemon.name}
-          </PokeCard>
-        ))}
-      </Main>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Main>
+          {selectedPokemonList.map((pokemon, index) => (
+            <PokeCard key={index} pokemon={pokemon}>
+              {pokemon.name}
+            </PokeCard>
+          ))}
+        </Main>
+      )}
     </Container>
   );
 };
