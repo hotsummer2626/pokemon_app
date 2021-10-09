@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "../../pages/Modal";
-import { TYPECOLOR } from "../../constant/type";
-import { STATCOLOR, STATTEXT } from "../../constant/stat";
+import { STATCOLOR, STATTEXT, TYPECOLOR } from "../../constant/constant";
 import Img from "./Img";
 import { mediaQueries } from "../../mediaQueries";
 
@@ -76,7 +75,7 @@ const StatWrapper = styled.div`
   background-color: #505152;
   display: grid;
   gap: 2px;
-  ${mediaQueries('xs')`
+  ${mediaQueries("xs")`
     width: 170px;
   `}
 `;
@@ -89,7 +88,7 @@ const StatBar = styled.div`
   border-radius: 10px;
   background-color: ${({ statName }) => STATCOLOR[statName]};
   transition: width 0.5s ease;
-  ${mediaQueries('xs')`
+  ${mediaQueries("xs")`
     height: 20px;
     line-height: 20px;
   `}
@@ -102,7 +101,7 @@ const StatName = styled.span`
   background-color: rgba(255, 255, 255, 0.2);
   position: absolute;
   border-radius: 10px 0 0 10px;
-  ${mediaQueries('xs')`
+  ${mediaQueries("xs")`
     width: 75px;
     font-size: 12px;
   `}
@@ -116,7 +115,7 @@ const StatNumber = styled.span`
   position: absolute;
   left: 150px;
   border-radius: 0 10px 10px 0;
-  ${mediaQueries('xs')`
+  ${mediaQueries("xs")`
     left: 75px;
     font-size: 12px;
   `}
@@ -130,23 +129,48 @@ const PokeCard = ({ pokemon }) => {
   };
   const officialArtwork = "official-artwork";
 
+  const renderTypes = (pokemon) => (
+    <TypesWrapper>
+      {pokemon.types.map(({ slot, type }) => (
+        <Type key={slot} type={type.name}>
+          {type.name}
+        </Type>
+      ))}
+    </TypesWrapper>
+  );
+
+  const renderModalContent = (pokemon) => (
+    <ModalContent>
+      <Img imgSrc={pokemon.sprites.other.dream_world.front_default} />
+      <StatWrapper>
+        {pokemon.stats.map(({ base_stat, stat }) => {
+          return (
+            <StatBar
+              key={stat.name}
+              statName={stat.name}
+              statNumber={base_stat}
+              isModalShow={isModalShow}
+            >
+              <StatName>{`${STATTEXT[stat.name]}:`}</StatName>
+              <StatNumber>{base_stat}</StatNumber>
+            </StatBar>
+          );
+        })}
+      </StatWrapper>
+    </ModalContent>
+  );
+
   return (
     <>
       <Container onClick={handleIsModalShowChange}>
+        <Number>{pokemon.id}</Number>
         <Img
           imgSrc={pokemon.sprites.other[officialArtwork].front_default}
           size="sm"
         />
-        <Number>{pokemon.id}</Number>
         <div>
           <Name>{pokemon.name}</Name>
-          <TypesWrapper>
-            {pokemon.types.map(({ slot, type }) => (
-              <Type key={slot} type={type.name}>
-                {type.name}
-              </Type>
-            ))}
-          </TypesWrapper>
+          {renderTypes(pokemon)}
         </div>
       </Container>
       <Modal
@@ -154,24 +178,7 @@ const PokeCard = ({ pokemon }) => {
         isModalShow={isModalShow}
         handleIsModalShowChange={handleIsModalShowChange}
       >
-        <ModalContent>
-          <Img imgSrc={pokemon.sprites.other.dream_world.front_default} />
-          <StatWrapper>
-            {pokemon.stats.map(({ base_stat, stat }) => {
-              return (
-                <StatBar
-                  key={stat.name}
-                  statName={stat.name}
-                  statNumber={base_stat}
-                  isModalShow={isModalShow}
-                >
-                  <StatName>{`${STATTEXT[stat.name]}:`}</StatName>
-                  <StatNumber>{base_stat}</StatNumber>
-                </StatBar>
-              );
-            })}
-          </StatWrapper>
-        </ModalContent>
+        {renderModalContent(pokemon)}
       </Modal>
     </>
   );

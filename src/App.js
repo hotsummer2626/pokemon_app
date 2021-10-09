@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import GlobalStyles from "./components/GlobalStyles";
 import PokeCard from "./components/PokeCard";
-import { TYPECOLOR, TYPEICON } from "./constant/type";
+import { TYPECOLOR, TYPEICON } from "./constant/constant";
 import { mediaQueries } from "./mediaQueries";
 import Loading from "./components/Loading";
+import { getPokemon } from "./api/apis";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -60,14 +60,9 @@ const Main = styled.main`
   `}
 `;
 
-const getPokemon = (id) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  return axios.get(url).then((res) => res.data);
-};
-
-const buildPokemonArr = async () => {
+const buildPokemonArr = async (amount) => {
   let pokemonArr = [];
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < amount; i += 1) {
     pokemonArr = [...pokemonArr, await getPokemon(i + 1)];
   }
   pokemonArr.map((pokemon) => {
@@ -83,7 +78,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    buildPokemonArr().then((pokemonArr) => {
+    buildPokemonArr(20).then((pokemonArr) => {
       setPokemonArr(pokemonArr);
       setSelectedPokemonList(pokemonArr);
       setLoading(false);
@@ -104,26 +99,30 @@ const App = () => {
     setSelectedPokemonList(selectedPokemonList);
   };
 
+  const renderTypefilter = () => (
+    <IconContainer>
+      {[{ text: "All" }, ...TYPEICON].map((icon) => {
+        return (
+          <IconWrapper
+            key={icon.text}
+            type={icon.text}
+            onClick={() => {
+              getSelectedPokemonList(icon.text);
+            }}
+          >
+            {icon.alt && <IconImg alt={icon.alt} src={icon.src} />}
+            <IconText>{icon.text}</IconText>
+          </IconWrapper>
+        );
+      })}
+    </IconContainer>
+  );
+
   return (
     <Container>
       <GlobalStyles />
       <Title>Pokemon</Title>
-      <IconContainer>
-        {[{ text: "All" }, ...TYPEICON].map((icon) => {
-          return (
-            <IconWrapper
-              key={icon.text}
-              type={icon.text}
-              onClick={() => {
-                getSelectedPokemonList(icon.text);
-              }}
-            >
-              {icon.alt && <IconImg alt={icon.alt} src={icon.src} />}
-              <IconText>{icon.text}</IconText>
-            </IconWrapper>
-          );
-        })}
-      </IconContainer>
+      {renderTypefilter()}
       {loading ? (
         <Loading />
       ) : (

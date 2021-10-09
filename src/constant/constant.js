@@ -1,3 +1,21 @@
+export const STATCOLOR = {
+  hp: "#fe0100",
+  attack: "#ef7e30",
+  defense: "#f8d02f",
+  "special-attack": "#688ff2",
+  "special-defense": "#78c751",
+  speed: "#f85687",
+};
+
+export const STATTEXT = {
+  hp: "HP",
+  attack: "Attack",
+  defense: "Defense",
+  "special-attack": "Sp.Atk",
+  "special-defense": "Sp.Def",
+  speed: "Speed",
+}
+
 export const TYPECOLOR = {
   fire: "#f08030",
   grass: "#78c850",
@@ -17,6 +35,7 @@ export const TYPECOLOR = {
   ice: "#98d8d8",
   steel: "#8e8d9e",
 };
+
 export const TYPEICON = [
   {
     text: "fire",
@@ -104,3 +123,4 @@ export const TYPEICON = [
     src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Pok%C3%A9mon_Steel_Type_Icon.svg/128px-Pok%C3%A9mon_Steel_Type_Icon.svg.png",
   },
 ];
+
