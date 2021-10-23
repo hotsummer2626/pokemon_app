@@ -14,6 +14,9 @@ const Container = styled.div`
   margin: 0 auto;
   display: grid;
   gap: 1.5rem;
+  ${mediaQueries("xs")`
+    padding: initial;
+  `}
 `;
 
 const Title = styled.h1`
@@ -39,6 +42,9 @@ const IconWrapper = styled.div`
   &:hover {
     transform: scale(1.2);
   }
+  ${mediaQueries("xs")`
+    padding: 3px;
+  `}
 `;
 const IconImg = styled.img`
   width: 30px;
@@ -49,6 +55,9 @@ const IconImg = styled.img`
 `;
 const IconText = styled.span`
   font-weight: 600;
+  ${mediaQueries("xs")`
+    font-size: 13px
+  `}
 `;
 
 const Main = styled.main`

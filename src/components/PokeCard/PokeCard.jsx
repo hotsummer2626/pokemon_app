@@ -38,6 +38,9 @@ const Container = styled.div`
 
 const Name = styled.h2`
   font-size: var(--h2-font-size);
+  /* ${mediaQueries("xl")`
+    display: none;
+  `} */
 `;
 
 const TypesWrapper = styled.div``;
@@ -75,9 +78,6 @@ const StatWrapper = styled.div`
   background-color: #505152;
   display: grid;
   gap: 2px;
-  ${mediaQueries("xs")`
-    width: 170px;
-  `}
 `;
 const StatBar = styled.div`
   position: relative;
@@ -89,8 +89,8 @@ const StatBar = styled.div`
   background-color: ${({ statName }) => STATCOLOR[statName]};
   transition: width 0.5s ease;
   ${mediaQueries("xs")`
-    height: 20px;
-    line-height: 20px;
+    height: 30px;
+    line-height: 30px;
   `}
 `;
 const StatName = styled.span`
@@ -141,7 +141,7 @@ const PokeCard = ({ pokemon }) => {
 
   const renderModalContent = (pokemon) => (
     <ModalContent>
-      <Img imgSrc={pokemon.sprites.other.dream_world.front_default} />
+      <Img size='lg' imgSrc={pokemon.sprites.other.dream_world.front_default} />
       <StatWrapper>
         {pokemon.stats.map(({ base_stat, stat }) => {
           return (

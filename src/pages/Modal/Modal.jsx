@@ -35,10 +35,9 @@ const Content = styled.div`
   background-color: ${({ type }) => TYPECOLOR[type]};
   padding: 1.5rem;
   border-radius: 0.5rem;
-
-  /* ${mediaQueries("md")`
-    width: 450px;
-  `} */
+  ${mediaQueries("xs")`
+    padding: 1rem;
+  `}
 `;
 const CloseIcon = styled(FontAwesomeIcon)`
   position: absolute;
