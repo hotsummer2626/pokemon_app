@@ -85,6 +85,7 @@ const App = () => {
   const [pokemonArr, setPokemonArr] = useState([]);
   const [selectedPokemonList, setSelectedPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log(pokemonArr);
 
   useEffect(() => {
     buildPokemonArr(20).then((pokemonArr) => {
@@ -99,10 +100,10 @@ const App = () => {
       type === "All"
         ? pokemonArr
         : pokemonArr.filter((pokemon) => {
-            let typeList = [];
-            for (const { type } of pokemon.types) {
-              typeList = [...typeList, type.name];
-            }
+            const typeList = pokemon.types.reduce(
+              (prev, curr) => [...prev, curr.type.name],
+              []
+            );
             return typeList.includes(type);
           });
     setSelectedPokemonList(selectedPokemonList);
